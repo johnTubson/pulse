@@ -24,11 +24,13 @@
 # production
 /build
 /storybook-static
+/dist
 
 # misc
 .DS_Store
 *.pem
 /docs/
+README.md
 
 # debug
 npm-debug.log*
