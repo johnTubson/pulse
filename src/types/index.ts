@@ -36,3 +36,10 @@ export interface NavItem {
   icon: string;
   roles: UserRole[];
 }
+
+export interface TransactionsResponse {
+  data: Transaction[];
+  total: number;
+  page: number;
+  pageSize: number;
+}

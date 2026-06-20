@@ -108,7 +108,7 @@ export function AppShell() {
             : "ml-[var(--sidebar-width)]"
         )}
       >
-        <header className="sticky top-0 z-20 flex h-[var(--topbar-height)] items-center justify-between border-b border-border bg-background/80 px-4 backdrop-blur md:px-6">
+        <header className="sticky top-0 z-30 flex h-[var(--topbar-height)] items-center justify-between border-b border-border bg-background/80 px-4 backdrop-blur md:px-6">
           <div className="flex items-center gap-3 md:hidden">
             <Button
               variant="ghost"

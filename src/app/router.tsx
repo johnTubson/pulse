@@ -22,6 +22,12 @@ const ComponentsDocsPage = lazy(() =>
   }))
 );
 
+const TransactionsPage = lazy(() =>
+  import("@/features/transactions/transactions-page").then((m) => ({
+    default: m.TransactionsPage,
+  }))
+);
+
 function PageLoader() {
   return (
     <div className="flex items-center justify-center py-12">
@@ -57,11 +63,9 @@ const router = createBrowserRouter([
           {
             path: "transactions",
             element: (
-              <PlaceholderPage
-                title="Transactions"
-                description="Virtualized transaction table with filters"
-                phase={3}
-              />
+              <LazyPage>
+                <TransactionsPage />
+              </LazyPage>
             ),
           },
           {

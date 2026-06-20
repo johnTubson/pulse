@@ -1,3 +1,5 @@
+import { format, parseISO } from "date-fns";
+
 import type { Currency } from "@/types";
 
 export function formatCurrency(amount: number, currency: Currency): string {
@@ -22,4 +24,12 @@ export function formatCompactNumber(value: number): string {
     notation: "compact",
     maximumFractionDigits: 1,
   }).format(value);
+}
+
+export function formatDate(iso: string): string {
+  return format(parseISO(iso), "MMM d, yyyy HH:mm");
+}
+
+export function formatDateShort(iso: string): string {
+  return format(parseISO(iso), "MMM d, yyyy");
 }

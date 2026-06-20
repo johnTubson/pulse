@@ -23,12 +23,20 @@ export const THEMES = {
 
 export type ThemeId = keyof typeof THEMES;
 
+export type ColorMode = "light" | "dark";
+
 export const DEFAULT_THEME: ThemeId = "teal";
+
+export const DEFAULT_COLOR_MODE: ColorMode = "dark";
 
 export const THEME_IDS = Object.keys(THEMES) as ThemeId[];
 
 export function isThemeId(value: string): value is ThemeId {
   return value in THEMES;
+}
+
+export function isColorMode(value: string): value is ColorMode {
+  return value === "light" || value === "dark";
 }
 
 export function getThemeAccent(theme: ThemeId): string {

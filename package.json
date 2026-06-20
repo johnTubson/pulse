@@ -14,6 +14,8 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.0",
+    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-virtual": "^3.14.3",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
     "lucide-react": "^1.21.0",
@@ -22,6 +24,7 @@
     "react-dom": "^19.2.6",
     "react-router-dom": "^7.18.0",
     "recharts": "^3.8.1",
+    "seedrandom": "^3.0.5",
     "tailwind-merge": "^3.6.0",
     "zustand": "^5.0.14"
   },
@@ -34,6 +37,7 @@
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@types/seedrandom": "^3.0.8",
     "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.3.0",
     "eslint-plugin-react-hooks": "^7.1.1",

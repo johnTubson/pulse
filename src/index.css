@@ -20,6 +20,7 @@
   --color-danger-muted: rgba(239, 68, 68, 0.15);
   --color-info: #3b82f6;
   --color-info-muted: rgba(59, 130, 246, 0.15);
+  --color-overlay: rgba(0, 0, 0, 0.6);
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-mono: ui-monospace, "Cascadia Code", monospace;
   --radius-sm: 0.375rem;
@@ -79,6 +80,46 @@
   --color-accent-muted: rgba(251, 146, 60, 0.14);
 }
 
+/* Light mode — near-white surfaces */
+[data-color-mode="light"] {
+  color-scheme: light;
+  --color-background: #fafafa;
+  --color-surface: #ffffff;
+  --color-surface-raised: #f4f4f5;
+  --color-border: #e4e4e7;
+  --color-border-subtle: #ececef;
+  --color-foreground: #18181b;
+  --color-muted: #52525b;
+  --color-muted-foreground: #71717a;
+  --color-overlay: rgba(0, 0, 0, 0.35);
+  --color-accent-muted: color-mix(
+    in srgb,
+    var(--color-accent) 16%,
+    transparent
+  );
+  --color-success-muted: color-mix(
+    in srgb,
+    var(--color-success) 14%,
+    transparent
+  );
+  --color-warning-muted: color-mix(
+    in srgb,
+    var(--color-warning) 14%,
+    transparent
+  );
+  --color-danger-muted: color-mix(
+    in srgb,
+    var(--color-danger) 14%,
+    transparent
+  );
+  --color-info-muted: color-mix(in srgb, var(--color-info) 14%, transparent);
+}
+
+[data-color-mode="dark"] {
+  color-scheme: dark;
+  --color-overlay: rgba(0, 0, 0, 0.6);
+}
+
 @layer base {
   *,
   *::before,
@@ -88,6 +129,10 @@
 
   html {
     color-scheme: dark;
+  }
+
+  html[data-color-mode="light"] {
+    color-scheme: light;
   }
 
   body {
