@@ -3,11 +3,13 @@ import { createRoot } from "react-dom/client";
 
 import { Providers } from "@/app/providers";
 import App from "@/App";
-import { enableMocking } from "@/mocks/browser";
 
 import "./index.css";
 
-enableMocking().then(() => {
+async function bootstrap() {
+  const { enableMocking } = await import("@/mocks/browser");
+  await enableMocking();
+
   createRoot(document.getElementById("root")!).render(
     <StrictMode>
       <Providers>
@@ -15,4 +17,6 @@ enableMocking().then(() => {
       </Providers>
     </StrictMode>
   );
-});
+}
+
+void bootstrap();

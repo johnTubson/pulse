@@ -30,12 +30,12 @@ function KpiSkeleton() {
 
 export function DashboardPage() {
   const accent = useThemeAccent();
-  const { data, isLoading, isError } = useQuery({
+  const { data, isPending, isError } = useQuery({
     queryKey: ["kpis"],
     queryFn: getKpis,
   });
 
-  if (isLoading) {
+  if (isPending && !data) {
     return (
       <div>
         <PageHeader />
@@ -48,7 +48,7 @@ export function DashboardPage() {
     );
   }
 
-  if (isError || !data) {
+  if (isError && !data) {
     return (
       <div>
         <PageHeader />

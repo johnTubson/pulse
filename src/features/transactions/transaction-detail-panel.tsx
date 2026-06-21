@@ -46,7 +46,7 @@ export function TransactionDetailPanel({
         </div>
       )}
 
-      {isError && (
+      {isError && !data && (
         <p className="text-sm text-danger">Failed to load transaction.</p>
       )}
 

@@ -46,12 +46,16 @@ export function FilterBar({
     <div className="space-y-4">
       <div className="flex flex-wrap items-end gap-3">
         <div className="min-w-[200px] flex-1">
-          <label className="mb-1.5 block text-xs font-medium text-muted-foreground">
+          <label
+            htmlFor="transaction-search"
+            className="mb-1.5 block text-xs font-medium text-muted-foreground"
+          >
             Search
           </label>
           <div className="relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <Input
+              id="transaction-search"
               placeholder="ID, reference, or email…"
               value={filters.search}
               onChange={(e) => onChange({ search: e.target.value })}
@@ -61,10 +65,14 @@ export function FilterBar({
         </div>
 
         <div className="w-40">
-          <label className="mb-1.5 block text-xs font-medium text-muted-foreground">
+          <label
+            htmlFor="transaction-status"
+            className="mb-1.5 block text-xs font-medium text-muted-foreground"
+          >
             Status
           </label>
           <Select
+            id="transaction-status"
             value={filters.status}
             onChange={(e) =>
               onChange({
@@ -81,10 +89,14 @@ export function FilterBar({
         </div>
 
         <div className="w-36">
-          <label className="mb-1.5 block text-xs font-medium text-muted-foreground">
+          <label
+            htmlFor="transaction-currency"
+            className="mb-1.5 block text-xs font-medium text-muted-foreground"
+          >
             Currency
           </label>
           <Select
+            id="transaction-currency"
             value={filters.currency}
             onChange={(e) =>
               onChange({ currency: e.target.value as Currency | "all" })
@@ -99,10 +111,14 @@ export function FilterBar({
         </div>
 
         <div className="w-40">
-          <label className="mb-1.5 block text-xs font-medium text-muted-foreground">
+          <label
+            htmlFor="transaction-date-from"
+            className="mb-1.5 block text-xs font-medium text-muted-foreground"
+          >
             From
           </label>
           <Input
+            id="transaction-date-from"
             type="date"
             value={filters.dateFrom}
             onChange={(e) => onChange({ dateFrom: e.target.value })}
@@ -110,10 +126,14 @@ export function FilterBar({
         </div>
 
         <div className="w-40">
-          <label className="mb-1.5 block text-xs font-medium text-muted-foreground">
+          <label
+            htmlFor="transaction-date-to"
+            className="mb-1.5 block text-xs font-medium text-muted-foreground"
+          >
             To
           </label>
           <Input
+            id="transaction-date-to"
             type="date"
             value={filters.dateTo}
             onChange={(e) => onChange({ dateTo: e.target.value })}

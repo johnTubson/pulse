@@ -5,9 +5,14 @@ import { handlers } from "./handlers";
 export const worker = setupWorker(...handlers);
 
 export async function enableMocking() {
-  if (import.meta.env.MODE !== "development") return;
+  const enabled =
+    import.meta.env.DEV || import.meta.env.VITE_ENABLE_MSW === "true";
+  if (!enabled) return;
 
   return worker.start({
     onUnhandledRequest: "bypass",
+    serviceWorker: {
+      url: "/mockServiceWorker.js",
+    },
   });
 }

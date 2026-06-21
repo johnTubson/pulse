@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useAuthHydrated } from "@/hooks/use-auth-hydrated";
 import { cn } from "@/lib/cn";
 import { ROLE_DESCRIPTIONS, ROLE_LABELS } from "@/lib/navigation";
 import { useAuthStore } from "@/stores/auth-store";
@@ -11,9 +12,12 @@ import type { UserRole } from "@/types";
 const ROLES: UserRole[] = ["admin", "analyst", "support"];
 
 export function LoginPage() {
+  const hydrated = useAuthHydrated();
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const login = useAuthStore((s) => s.login);
   const [selectedRole, setSelectedRole] = useState<UserRole>("analyst");
+
+  if (!hydrated) return null;
 
   if (isAuthenticated) {
     return <Navigate to="/dashboard" replace />;

@@ -17,7 +17,7 @@ export function TransactionsPage() {
     (s) => s.setSelectedTransactionId
   );
 
-  const { data, isLoading, isError } = useTransactions();
+  const { data, isPending, isError, isFetching } = useTransactions();
 
   const sorting: SortingState = useMemo(
     () => [{ id: filters.sortBy, desc: filters.sortOrder === "desc" }],
@@ -55,7 +55,7 @@ export function TransactionsPage() {
         />
       </Card>
 
-      {isError ? (
+      {isError && !data ? (
         <Card>
           <p className="text-sm text-danger">Failed to load transactions.</p>
         </Card>
@@ -65,7 +65,7 @@ export function TransactionsPage() {
           sorting={sorting}
           onSortingChange={handleSortingChange}
           onRowClick={(txn) => setSelectedTransactionId(txn.id)}
-          isLoading={isLoading}
+          isLoading={(isPending && !data) || isFetching}
         />
       )}
 

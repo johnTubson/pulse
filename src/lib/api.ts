@@ -2,7 +2,12 @@ import {
   filtersToSearchParams,
   type TransactionFilters,
 } from "@/lib/transaction-filters";
-import type { KpiData, Transaction, TransactionsResponse } from "@/types";
+import type {
+  AnalyticsData,
+  KpiData,
+  Transaction,
+  TransactionsResponse,
+} from "@/types";
 
 const API_BASE = "/api";
 
@@ -33,4 +38,8 @@ export function getTransactions(filters: Partial<TransactionFilters> = {}) {
 
 export function getTransaction(id: string) {
   return fetchJson<Transaction>(`/transactions/${id}`);
+}
+
+export function getAnalytics() {
+  return fetchJson<AnalyticsData>("/analytics");
 }

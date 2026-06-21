@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   applyTransactionFilters,
   filtersToSearchParams,
+  paginateTransactions,
   searchParamsToFilters,
 } from "@/lib/transaction-filters";
 import {
@@ -112,5 +113,105 @@ describe("filter → query param mapping", () => {
 
     expect(bySearch).toHaveLength(1);
     expect(bySearch[0]?.id).toBe(first.id);
+  });
+
+  it("filters by currency", () => {
+    const txns = generateTransactions(200, "currency-test");
+    const ngnOnly = applyTransactionFilters(txns, {
+      status: "all",
+      currency: "NGN",
+      search: "",
+      dateFrom: "",
+      dateTo: "",
+      sortBy: "createdAt",
+      sortOrder: "desc",
+      page: 1,
+      pageSize: 10_000,
+    });
+
+    expect(ngnOnly.every((t) => t.currency === "NGN")).toBe(true);
+    expect(ngnOnly.length).toBeGreaterThan(0);
+    expect(ngnOnly.length).toBeLessThan(txns.length);
+  });
+
+  it("filters by date range", () => {
+    const txns = generateTransactions(100, "date-test");
+    const dates = txns.map((t) => new Date(t.createdAt).getTime());
+    const mid = dates[Math.floor(dates.length / 2)]!;
+    const from = new Date(mid - 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+    const to = new Date(mid + 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+
+    const inRange = applyTransactionFilters(txns, {
+      status: "all",
+      currency: "all",
+      search: "",
+      dateFrom: from,
+      dateTo: to,
+      sortBy: "createdAt",
+      sortOrder: "desc",
+      page: 1,
+      pageSize: 10_000,
+    });
+
+    expect(inRange.length).toBeGreaterThan(0);
+    expect(inRange.length).toBeLessThan(txns.length);
+    for (const txn of inRange) {
+      const time = new Date(txn.createdAt).getTime();
+      expect(time).toBeGreaterThanOrEqual(new Date(from).getTime());
+      expect(time).toBeLessThanOrEqual(
+        new Date(to).getTime() + 24 * 60 * 60 * 1000 - 1
+      );
+    }
+  });
+
+  it("sorts ascending by amount", () => {
+    const txns = generateTransactions(50, "sort-test");
+    const sorted = applyTransactionFilters(txns, {
+      status: "all",
+      currency: "all",
+      search: "",
+      dateFrom: "",
+      dateTo: "",
+      sortBy: "amount",
+      sortOrder: "asc",
+      page: 1,
+      pageSize: 10_000,
+    });
+
+    for (let i = 1; i < sorted.length; i++) {
+      expect(sorted[i]!.amount).toBeGreaterThanOrEqual(sorted[i - 1]!.amount);
+    }
+  });
+
+  it("paginates filtered results", () => {
+    const txns = generateTransactions(25, "page-test");
+    const page1 = paginateTransactions(txns, 1, 10);
+    const page2 = paginateTransactions(txns, 2, 10);
+    const page3 = paginateTransactions(txns, 3, 10);
+
+    expect(page1.data).toHaveLength(10);
+    expect(page2.data).toHaveLength(10);
+    expect(page3.data).toHaveLength(5);
+    expect(page1.total).toBe(25);
+    expect(page1.page).toBe(1);
+    expect(page1.pageSize).toBe(10);
+  });
+
+  it("ignores invalid status and sort values in search params", () => {
+    const params = new URLSearchParams({
+      status: "bogus",
+      sortBy: "not-a-column",
+      sortOrder: "sideways",
+    });
+    const parsed = searchParamsToFilters(params);
+
+    expect(parsed.status).toBe("all");
+    expect(parsed.sortBy).toBe("createdAt");
+    expect(parsed.sortOrder).toBe("desc");
+  });
+
+  it("trims search before serializing to search params", () => {
+    const params = filtersToSearchParams({ search: "  txn_000001  " });
+    expect(params.get("search")).toBe("txn_000001");
   });
 });

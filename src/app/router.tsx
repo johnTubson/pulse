@@ -28,6 +28,18 @@ const TransactionsPage = lazy(() =>
   }))
 );
 
+const AnalyticsPage = lazy(() =>
+  import("@/features/analytics/analytics-page").then((m) => ({
+    default: m.AnalyticsPage,
+  }))
+);
+
+const LiveFeedPage = lazy(() =>
+  import("@/features/live-feed/live-feed-page").then((m) => ({
+    default: m.LiveFeedPage,
+  }))
+);
+
 function PageLoader() {
   return (
     <div className="flex items-center justify-center py-12">
@@ -71,21 +83,17 @@ const router = createBrowserRouter([
           {
             path: "analytics",
             element: (
-              <PlaceholderPage
-                title="Analytics"
-                description="Volume charts, success funnel, payout breakdown"
-                phase={4}
-              />
+              <LazyPage>
+                <AnalyticsPage />
+              </LazyPage>
             ),
           },
           {
             path: "live",
             element: (
-              <PlaceholderPage
-                title="Live Feed"
-                description="Real-time transaction event stream"
-                phase={4}
-              />
+              <LazyPage>
+                <LiveFeedPage />
+              </LazyPage>
             ),
           },
           {

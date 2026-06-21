@@ -43,3 +43,44 @@ export interface TransactionsResponse {
   page: number;
   pageSize: number;
 }
+
+export type LiveEventType =
+  | "transaction.settled"
+  | "transaction.failed"
+  | "transaction.pending"
+  | "transaction.authorized"
+  | "transaction.reversed";
+
+export interface LiveEvent {
+  id: string;
+  type: LiveEventType;
+  transactionId: string;
+  reference: string;
+  amount: number;
+  currency: Currency;
+  timestamp: string;
+  message: string;
+}
+
+export interface VolumeByDay {
+  date: string;
+  label: string;
+  volume: number;
+}
+
+export interface FunnelStage {
+  stage: string;
+  count: number;
+}
+
+export interface PayoutBreakdown {
+  currency: Currency;
+  amount: number;
+  label: string;
+}
+
+export interface AnalyticsData {
+  volumeByDay: VolumeByDay[];
+  successFunnel: FunnelStage[];
+  payoutBreakdown: PayoutBreakdown[];
+}
